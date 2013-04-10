@@ -1,0 +1,38 @@
+{
+  "name": "CrimeData",
+  "description": "A sandbox project for playing with Crime Data",
+  "author": "Victor Quinn <mail@victorquinn.com>",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/victorquinn/crimedata"
+  },
+  "scripts": {
+    "start": "node app"
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  },
+  "dependencies": {
+    "express": "3.1.0",
+    "jade": "*",
+    "mongoose": "*",
+    "require-directory": "*"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-mocha": "~0.2.1",
+    "grunt-simple-mocha": "~0.3.2",
+    "mocha": "latest",
+    "chai": "latest",
+    "supertest": "*"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
+}
