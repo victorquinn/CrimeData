@@ -1,6 +1,4 @@
 
-/*
- * Require all files defined in this directory.
- */
+// Require all files defined in this directory.
 
 module.exports = require('require-directory')(module);

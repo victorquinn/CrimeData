@@ -1,6 +1,14 @@
 module.exports = function(grunt) {
   // Project configuration
   grunt.initConfig({
+    docco: {
+      debug: {
+        src: ['app.js', 'routes/*.js', '/models/*.js'],
+        options: {
+          output: 'docs/'
+        }
+      }
+    },
     jshint: {
       options: {
         curly: true,
@@ -26,13 +34,14 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['*.js', 'routes/*.js', 'test/*.js'],
-      tasks: ['simplemocha', 'jshint']
+      tasks: ['simplemocha', 'jshint', 'docco']
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-simple-mocha');
+  grunt.loadNpmTasks('grunt-docco');
 
   grunt.registerTask('default', ['watch']);
 };

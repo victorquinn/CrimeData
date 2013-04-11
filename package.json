@@ -17,16 +17,20 @@
     "npm": "1.1.x"
   },
   "dependencies": {
+    "docco": "*",
     "express": "3.1.0",
     "jade": "*",
+    "moment": "*",
     "mongoose": "*",
     "require-directory": "*",
-    "request": "*"
+    "request": "*",
+    "underscore": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.0",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-watch": "~0.2.0",
+    "grunt-docco": "~0.2.0",
     "grunt-mocha": "~0.2.1",
     "grunt-simple-mocha": "~0.3.2",
     "mocha": "latest",
