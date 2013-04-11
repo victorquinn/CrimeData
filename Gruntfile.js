@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         }
       },
       uses_defaults: ['*.js'],
-      all: ['Gruntfile.js', 'app.js']
+      all: ['Gruntfile.js', 'app.js', 'models/*.js']
     },
     pkg: grunt.file.readJSON('package.json'),
     simplemocha: {
