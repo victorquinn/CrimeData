@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     docco: {
       debug: {
-        src: ['app.js', 'routes/*.js', '/models/*.js'],
+        src: ['app.js', 'routes/*.js', 'models/*.js'],
         options: {
           output: 'docs/'
         }
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
       all: {src: 'test/*.js'}
     },
     watch: {
-      files: ['*.js', 'routes/*.js', 'test/*.js'],
+      files: ['*.js', 'routes/*.js', 'test/*.js', 'models/*.js'],
       tasks: ['simplemocha', 'jshint', 'docco']
     }
   });

@@ -1,7 +1,8 @@
 
-/*
- * Crime model
- */
+// Crime model
+// See http://sanfrancisco.crimespotting.org/api for an example of the data
+// this is intended to model.
+
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
@@ -16,8 +17,8 @@ var CrimeSchema = new Schema(
     zip_code: String,
     beat: String,
     accuracy: String,
-    lat: String,
-    long: String,
+    latitude: String,
+    longitude: String,
     created: {type: Date, 'default': Date.now}
   }
 );

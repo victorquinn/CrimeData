@@ -6,9 +6,13 @@
 // quite a bit, starting with some local caching (either temporary via Redis or
 // longer term by maintaining some kind of Persistent cache in Mongo)
 
-var request = require('request'),
+var config = require('../config'),
+    request = require('request'),
     moment = require('moment'),
-    _ = require('underscore');
+    mongoose = require('mongoose'),
+    _ = require('underscore'),
+    Crime = require('../models/crime.js');
+console.log(Crime);
 
 module.exports = function(app) {
   app.get('/import-crimes/*', function(req, res) {
@@ -26,8 +30,22 @@ module.exports = function(app) {
           request("http://sanfrancisco.crimespotting.org/crime-data?count=10000&dtstart=" + start.format() + "&dtend=" + end.format() + "&format=json", function(error, response, body) {
               if (!error && response.statusCode == 200) {
                   var data = JSON.parse(body);
-                  _.each(data.features, function(crime) {
-                      console.log(crime.properties.description);
+                  _.each(data.features, function(c) {
+                      var db = mongoose.createConnection();
+
+                      Crime.create({
+                          id: c.id,
+                          type: c.properties.crime_type,
+                          time: c.properties.date_time,
+                          description: c.properties.description,
+                          case_number: c.properties.case_number,
+                          address: c.properties.address,
+                          zip_code: c.properties.zip_code,
+                          beat: c.properties.beat,
+                          accuracy: c.properties.accuracy,
+                          latitude: c.geometry.coordinates[0],
+                          longitude: c.geometry.coordinates[1]
+                      });
                   });
                   
                   totalRecords += data.features.length;

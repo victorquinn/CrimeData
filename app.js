@@ -9,8 +9,7 @@ var express = require('express'),
     routes = require('./routes'),
     http = require('http'),
     path = require('path'),
-    models = require('./models'),
-    Crimes = models.Crimes;
+    models = require('./models');
 
 /**
  * Data setup
