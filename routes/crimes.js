@@ -21,7 +21,7 @@ module.exports = function(app) {
       request("http://sanfrancisco.crimespotting.org/crime-data?&count=10000&dtstart=" + start.format() + "&dtend=" + end.format() + "&format=json", function(error, response, body) {
           if (!error && response.statusCode == 200) {
               var data = JSON.parse(body);
-              res.send(body);
+              res.send(data.features);
           }
           else {
               res.send(error.message);

@@ -12,7 +12,6 @@ var config = require('../config'),
     mongoose = require('mongoose'),
     _ = require('underscore'),
     Crime = require('../models/crime.js');
-console.log(Crime);
 
 module.exports = function(app) {
   app.get('/import-crimes/*', function(req, res) {
@@ -58,7 +57,6 @@ module.exports = function(app) {
           start.add('days', 1);
           end.add('days', 1);
       });
-      console.log(totalRecords);
 /*
       while (end.year() < (year + 1)) {
           start.add('days', 1);
@@ -76,7 +74,6 @@ module.exports = function(app) {
           });
       }
 */
-      console.log(req.params);
 
       request("http://sanfrancisco.crimespotting.org/crime-data?&dtstart=" + start.format() + "&dtend=" + end.format() + "&format=json", function(error, response, body) {
           if (!error && response.statusCode == 200) {
