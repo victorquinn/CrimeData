@@ -14,12 +14,12 @@ var config = require('../config'),
 module.exports = function(app) {
   app.get('/crimes/*', function(req, res) {
       var year = req.params[0],
-          start = moment(year + '-01-01'),
-          end = moment(year + '-01-02');
+          start = moment(year + '-01-01').format("YYYY-MM-DDThh:mm:ssZ"),
+          end = moment(year + '-01-02').format("YYYY-MM-DDThh:mm:ssZ");
 
-      console.log(start.format("YYYY-MM-DDTHH:mm:ssZ"));
-      console.log(end.format("YYYY-MM-DDTHH:mm:ssZ"));
-      request("http://sanfrancisco.crimespotting.org/crime-data?&count=10000&dtstart=" + start.format("YYYY-MM-DDTHH:mm:ssZ") + "&dtend=" + end.format("YYYY-MM-DDTHH:mm:ssZ") + "&format=json", function(error, response, body) {
+      console.log(start);
+      console.log(end);
+      request("http://sanfrancisco.crimespotting.org/crime-data?&count=10000&dtstart=" + start + "&dtend=" + end + "&format=json", function(error, response, body) {
           if (!error && response.statusCode == 200) {
               var data = JSON.parse(body);
               res.send(data.features);
