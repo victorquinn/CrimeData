@@ -53,8 +53,8 @@ module.exports = function(app) {
                                   longitude: crime.geometry.coordinates[1],
                               });
                           });
-                          redis.set(redis_key, JSON.stringify(out), function(crimes) {
-                              res.send(JSON.parse(crimes));
+                          redis.set(redis_key, JSON.stringify(out), function(err, status) {
+                              res.send(out);
                           });
                       }
                       else {
