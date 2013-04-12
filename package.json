@@ -22,6 +22,7 @@
     "jade": "*",
     "moment": "*",
     "mongoose": "*",
+    "redis": "*",
     "require-directory": "*",
     "request": "*",
     "underscore": "*"
