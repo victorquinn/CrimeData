@@ -14,8 +14,8 @@ var config = require('../config'),
 module.exports = function(app) {
   app.get('/crimes/*', function(req, res) {
       var year = req.params[0],
-          start = moment(year + '-01-01').format("YYYY-MM-DDThh:mm:ssZ"),
-          end = moment(year + '-01-02').format("YYYY-MM-DDThh:mm:ssZ");
+          start = moment(year + '-01-01').format("YYYY-MM-DDThh:mm:ss[Z]"),
+          end = moment(year + '-01-02').format("YYYY-MM-DDThh:mm:ss[Z]");
 
       console.log(start);
       console.log(end);
