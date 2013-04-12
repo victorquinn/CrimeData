@@ -1,7 +1,7 @@
 
-/**
- * Module dependencies.
- */
+//
+// Module dependencies.
+//
 
 var express = require('express'),
     mongoose = require('mongoose'),
@@ -11,9 +11,10 @@ var express = require('express'),
     path = require('path'),
     models = require('./models');
 
-/**
- * Data setup
- */
+//
+// Data setup
+//
+
 mongoose.connect(config.mongoUri);
 
 var app = module.exports = express();

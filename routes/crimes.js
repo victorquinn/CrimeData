@@ -18,6 +18,8 @@ module.exports = function(app) {
           start = moment(year + '-01-01'),
           end = moment(year + '-01-02');
 
+      console.log(start.format());
+      console.log(end.format());
       request("http://sanfrancisco.crimespotting.org/crime-data?&count=10000&dtstart=" + start.format() + "&dtend=" + end.format() + "&format=json", function(error, response, body) {
           if (!error && response.statusCode == 200) {
               var data = JSON.parse(body);
