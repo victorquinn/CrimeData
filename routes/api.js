@@ -19,28 +19,15 @@ module.exports = function(app) {
             res.send(crimes);
         });
     });
+
+    app.get('/api/v1/monthly/*', function(req, res) {
+        var year = req.params[0];
+
+        var monthly = [234, 288, 538, 348, 448, 624,
+                       229, 519, 251, 773, 294, 111];
+
+        // Return monthly aggregate data, format tbd. Currently sending
+        // back a sample sure to be changed static format.
+        res.send(monthly);
+    });
 };
-
-
-/*
-// A sample entry
-
-{"id":"44977",
-"type":"Feature",
-"geometry":
-   {"type":"Point",
-    "coordinates":
-      [-122.404232,37.784496]
-   },
-"properties":{
-  "crime_type":"SIMPLE ASSAULT",
-  "date_time":"2012-01-06 21:00:00",
-  "description":"BATTERY",
-  "case_number":"120023974",
-  "address":null,
-  "zip_code":null,
-  "beat":null,
-  "accuracy":"9"
-}
-}
-*/
