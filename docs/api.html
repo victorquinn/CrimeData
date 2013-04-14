@@ -1,0 +1,44 @@
+<!DOCTYPE html>  <html> <head>   <title>api.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="fetchCrimes.html">                 fetchCrimes.js               </a>                                           <a class="source" href="index.html">                 index.js               </a>                                           <a class="source" href="app.html">                 app.js               </a>                                           <a class="source" href="crime.html">                 crime.js               </a>                                           <a class="source" href="index.html">                 index.js               </a>                                           <a class="source" href="api.html">                 api.js               </a>                                           <a class="source" href="crimes.html">                 crimes.js               </a>                                           <a class="source" href="home.html">                 home.js               </a>                                           <a class="source" href="import-crimes.html">                 import-crimes.js               </a>                                           <a class="source" href="index.html">                 index.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               api.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>GET crimes.</p>
+
+<p>Currently this just hits the San Francisco Crime Data API in real time, 
+turns around, and passes the request off to the requester. Could be optimized
+quite a bit, starting with some local caching (either temporary via Redis or
+longer term by maintaining some kind of Persistent cache in Mongo)</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">),</span>
+    <span class="nx">fetchCrimes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;../api/fetchCrimes&#39;</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Accepts 2 arguments: Year (2012) and Month (01, 02, 03, ..., 12)</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/api/v1/crimes/*/*&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="nx">month</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">||</span> <span class="mi">01</span><span class="p">;</span>
+
+        <span class="nx">fetchCrimes</span><span class="p">(</span><span class="nx">year</span><span class="p">.</span><span class="nx">toString</span><span class="p">(),</span> <span class="nx">month</span><span class="p">.</span><span class="nx">toString</span><span class="p">(),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">crimes</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">crimes</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+
+
+<span class="cm">/*</span>
+
+<span class="cm">//DIVIDER</span>
+
+<span class="cm">{&quot;id&quot;:&quot;44977&quot;,</span>
+<span class="cm">&quot;type&quot;:&quot;Feature&quot;,</span>
+<span class="cm">&quot;geometry&quot;:</span>
+<span class="cm">   {&quot;type&quot;:&quot;Point&quot;,</span>
+<span class="cm">    &quot;coordinates&quot;:</span>
+<span class="cm">      [-122.404232,37.784496]</span>
+<span class="cm">   },</span>
+<span class="cm">&quot;properties&quot;:{</span>
+<span class="cm">  &quot;crime_type&quot;:&quot;SIMPLE ASSAULT&quot;,</span>
+<span class="cm">  &quot;date_time&quot;:&quot;2012-01-06 21:00:00&quot;,</span>
+<span class="cm">  &quot;description&quot;:&quot;BATTERY&quot;,</span>
+<span class="cm">  &quot;case_number&quot;:&quot;120023974&quot;,</span>
+<span class="cm">  &quot;address&quot;:null,</span>
+<span class="cm">  &quot;zip_code&quot;:null,</span>
+<span class="cm">  &quot;beat&quot;:null,</span>
+<span class="cm">  &quot;accuracy&quot;:&quot;9&quot;</span>
+<span class="cm">}</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>A sample entry</p>             </td>             <td class="code">               <div class="highlight"><pre>undefined</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

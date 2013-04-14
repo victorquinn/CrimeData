@@ -1,0 +1,32 @@
+* Crime Data
+** Technology Stack
+When I first started considering how best to achieve this, I started by thinking about the technology stack. It needed to push potentially a lot of data from server to client, 
+
+** Passthrough
+I first tried hitting the API directly, using my node.js instance as a proxy. This on average turned out to be very quick, averaging ~6.9ms/request. I timed it using the following python code from the terminal:
+
+#+NAME: Performance testing code /scripts/performance.py
+#+BEGIN_SRC python
+import timeit
+total_time = timeit.timeit("import urllib; urllib.urlretrieve('http://localhost:5000/crimes/2012', 'crimedata.json')", number=100)
+print total_time/100
+#+END_SRC
+
+0.239711079597
+or ~239ms average response time
+
+That’s hitting my local machine, but is going out to the cloud for the request itself. So let’s try it now on heroku. Same script
+
+#+NAME: Performance testing code /scripts/performance.py
+#+BEGIN_SRC python
+import timeit
+total_time = timeit.timeit("import urllib; urllib.urlretrieve('http://crimedata.herokuapp.com/crimes/2012', 'crimedata.json')", number=100)
+print total_time/100
+#+END_SRC
+
+0.256220901012
+or ~256ms average response time
+
+That's still not too bad. But this is only retrieving one day of data. What if we ratchet that up to say, a month? Now we're talking about ~2,742ms. This is unacceptable!
+
+*** Enter redis.
