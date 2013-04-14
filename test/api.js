@@ -16,13 +16,13 @@ var chai = require('chai'),
 describe("CrimeData - API", function() {
     describe('fetchCrimes()', function() {
         it('fetchCrimes should not be undefined', function(done) {
-            fetchCrimes('2012', '01', function(crimes) {
+            fetchCrimes('2012', '01', '01', function(crimes) {
                 expect(crimes).to.not.be.undefined;
                 done();
             });
         });
         it('fetchCrimes should have proper crime format', function(done) {
-            fetchCrimes('2012', '01', function(crimes) {
+            fetchCrimes('2012', '01', '01', function(crimes) {
                 _.each(crimes, function(crime) {
                     // These come from the original API source but we filter them
                     // out because they're all null or otherwise not useful.

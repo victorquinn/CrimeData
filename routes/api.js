@@ -10,12 +10,13 @@ var _ = require('underscore'),
     fetchCrimes = require('../api/fetchCrimes');
 
 module.exports = function(app) {
-    // Accepts 2 arguments: Year (2012) and Month (01, 02, 03, ..., 12)
-    app.get('/api/v1/crimes/*/*', function(req, res) {
+    // Accepts 3 arguments: Year (2012) and Month (01, 02, 03, ..., 12) and Day (01, 02, ..., 31)
+    app.get('/api/v1/crimes/*/*/*', function(req, res) {
         var year = req.params[0],
-            month = req.params[1] || 01;
+            month = req.params[1] || '01',
+            day = req.params[2] || '01';
 
-        fetchCrimes(year.toString(), month.toString(), function(crimes) {
+        fetchCrimes(year.toString(), month.toString(), day.toString(), function(crimes) {
             res.send(crimes);
         });
     });

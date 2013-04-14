@@ -23,10 +23,10 @@ if (process.env.REDISTOGO_URL) {
 // Currently, this only takes year, month. Future enhancement for more granularity
 // Would love to have this pull by day, and then a helper function to request crimes
 // by month which actually does the request per day.
-module.exports = function(year, month, next) {
-    var start = moment(year + '-' + month, 'YYYY-MM'),
-        end = moment(year + '-' + month, 'YYYY-MM').add('months', 1),
-        redis_key = year + month;
+module.exports = function(year, month, day, next) {
+    var start = moment(year + '-' + month + '-' + day, 'YYYY-MM-DD'),
+        end = moment(year + '-' + month + '-' + day, 'YYYY-MM-DD').add('days', 1),
+        redis_key = year + month + day;
 
 //    redis.del(redis_key); // Temporary, uncomment to bust cache
     redis.get(redis_key, function(error, body) {
