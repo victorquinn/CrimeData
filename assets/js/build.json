@@ -1,0 +1,16 @@
+{
+    name: 'crimedata',
+    out: '../../public/javascripts/crimedata.js',
+    baseUrl: '.',
+    include: 'requireLib',
+    paths: {
+        'requireLib': '../../node_modules/requirejs/require',
+        'jquery': 'lib/jquery-1.9.1.min',
+        'backbone': 'lib/backbone-min',
+        'underscore': 'lib/underscore-min',
+        'd3': 'lib/d3.v3.min'
+    },
+    generateSourceMaps: true,
+    optimize: 'uglify2',
+    preserveLicenseComments: false
+}
