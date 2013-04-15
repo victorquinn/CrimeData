@@ -24,9 +24,25 @@ if (process.env.REDISTOGO_URL) {
 // Would love to have this pull by day, and then a helper function to request crimes
 // by month which actually does the request per day.
 module.exports = function(year, month, day, next) {
-    var start = moment(year + '-' + month + '-' + day, 'YYYY-MM-DD'),
-        end = moment(year + '-' + month + '-' + day, 'YYYY-MM-DD').add('days', 1),
-        redis_key = year + month + day;
+    var start, end;
+
+    if (day === null) {
+        if (month === null) {
+            // Retrieve a year's worth of data. CAUTION. This should be done by multiple API
+            // calls, not one monster one as it is now.
+            start = moment(year, 'YYYY');
+            end = moment(year, 'YYYY').add('years', 1);
+        }
+        else {
+            start = moment(year + '-' + month, 'YYYY-MM');
+            end = moment(year + '-' + month, 'YYYY-MM').add('months', 1);
+        }
+    } else {
+        start = moment(year + '-' + month + '-' + day, 'YYYY-MM-DD');
+        end = moment(year + '-' + month + '-' + day, 'YYYY-MM-DD').add('days', 1);
+    }
+
+    redis_key = year + month + day;
 
 //    redis.del(redis_key); // Temporary, uncomment to bust cache
     redis.get(redis_key, function(error, body) {
@@ -50,7 +66,7 @@ module.exports = function(year, month, day, next) {
                                 type: crime.properties.crime_type,
                                 description: crime.properties.description,
                                 case_number: crime.properties.case_number,
-                                date_time: crime.properties.date_time,
+                                date_time: moment(crime.properties.date_time).utc(),
                                 latitude: crime.geometry.coordinates[0],
                                 longitude: crime.geometry.coordinates[1],
                             });
