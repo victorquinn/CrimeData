@@ -42,7 +42,7 @@ module.exports = function(year, month, day, next) {
         end = moment(year + '-' + month + '-' + day, 'YYYY-MM-DD').add('days', 1);
     }
 
-    redis_key = year + month + day;
+    var redis_key = year + month + day;
 
 //    redis.del(redis_key); // Temporary, uncomment to bust cache
     redis.get(redis_key, function(error, body) {
