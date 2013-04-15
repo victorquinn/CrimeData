@@ -5,34 +5,35 @@ require.config({
         'backbone': 'lib/backbone-min',
         'underscore': 'lib/underscore-min',
         'd3': 'lib/d3.v3.min',
+        'spin': 'lib/spin.min',
         'text': 'lib/text'
     }
 });
 
-var debug;
+require(['jquery', 'underscore', 'd3', 'spin', 'text!templates/crime-pre.html', 'backbone'],
+function($, _, d3, Spinner, crime_pre_template) {
 
-require(['jquery', 'underscore', 'backbone', 'd3', 'text!templates/crimes-pre'],
-function($, _) {
-    $('.mainwidget').append("Crimes are being fetched...");
+    $('.mainwidget').append("<div id='waiting-spinner'></div>");
 
-    var Crime = Backbone.Model.extend({
+    var target = document.getElementById('#waiting-spinner');
+    var spinner = new Spinner({ lines: 10, length: 8, width: 4, radius: 8 }).spin(target);
+
+    var Crime = Backbone.Model.extend({});
+
+    var CrimesCollection = Backbone.Collection.extend({
+        model: Crime
     });
 
-    var Crimes = Backbone.Collection.extend({
-        model: Crime,
-        urlRoot: '/api/v1/crimes'
-    });
+    var crimes = new CrimesCollection();
 
-    var crimes = new Crimes({
-        url: '/2012/04/01'
-    });
-    debug = crimes;
-    crimes.fetch();
+    crimes.url = '/api/v1/crimes/2012/04/01';
 
-    var out = "";
-
-    _.each(crimes, function(crime) {
-        
+    crimes.fetch({
+        success: function(response) {
+            $('.mainwidget').empty();
+            response.each(function(crime) {
+                $('.mainwidget').append(_.template(crime_pre_template, crime.toJSON()));
+            });
+        }
     });
-    console.log(crimes);
 });
