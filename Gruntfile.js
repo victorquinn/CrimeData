@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     docco: {
       debug: {
-        src: ['app.js', 'routes/*.js', 'models/*.js', 'api/*.js'],
+        src: ['app.js', 'routes/*.js', 'models/*.js', 'api/*.js', 'assets/js/*.js'],
         options: {
           output: 'docs/'
         }
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         }
       },
       uses_defaults: ['*.js'],
-      all: ['Gruntfile.js', 'app.js', 'models/*.js']
+      all: ['Gruntfile.js', 'app.js', 'models/*.js', 'api/*.js', 'routes/*.js', 'assets/js/*.js']
     },
     pkg: grunt.file.readJSON('package.json'),
     simplemocha: {
@@ -32,8 +32,28 @@ module.exports = function(grunt) {
       },
       all: {src: 'test/*.js'}
     },
+    requirejs: {
+      compile: {
+        options: {
+          name: 'crimedata',
+          out: 'public/javascripts/crimedata.js',
+          baseUrl: 'assets/js',
+          include: 'requireLib',
+          paths: {
+            'requireLib': '../../node_modules/requirejs/require',
+            'jquery': 'lib/jquery-1.9.1.min',
+            'backbone': 'lib/backbone-min',
+            'underscore': 'lib/underscore-min',
+            'd3': 'lib/d3.v3.min'
+          },
+          generateSourceMaps: true,
+          optimize: 'uglify2',
+          preserveLicenseComments: false
+        }
+      }
+    },
     watch: {
-      files: ['*.js', 'routes/*.js', 'test/*.js', 'models/*.js', 'api/*.js'],
+      files: ['*.js', 'routes/*.js', 'test/*.js', 'models/*.js', 'api/*.js', 'assets/js/*.js'],
       tasks: ['simplemocha', 'jshint', 'docco']
     }
   });
@@ -41,6 +61,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-simple-mocha');
+  grunt.loadNpmTasks('grunt-requirejs');
   grunt.loadNpmTasks('grunt-docco');
 
   grunt.registerTask('default', ['watch']);
