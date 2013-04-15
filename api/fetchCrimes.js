@@ -53,7 +53,7 @@ module.exports = function(year, month, day, next) {
             // If body is null, there was a cache miss, so let's hit the live API
             if (body === null) {
                 request("http://sanfrancisco.crimespotting.org/crime-data?&count=10000&dtstart=" + start.format("YYYY-MM-DDThh:mm:ss[Z]") + "&dtend=" + end.format("YYYY-MM-DDThh:mm:ss[Z]") + "&format=json", function(error, response, body) {
-                    if (!error && response.statusCode == 200) {
+                    if (!error && response.statusCode === 200) {
                         var data = JSON.parse(body);
                         // Drop elements we don't care about to reduce size of dataset.
                         // These are null or otherwise not useful
@@ -68,7 +68,7 @@ module.exports = function(year, month, day, next) {
                                 case_number: crime.properties.case_number,
                                 date_time: moment(crime.properties.date_time).utc(),
                                 latitude: crime.geometry.coordinates[0],
-                                longitude: crime.geometry.coordinates[1],
+                                longitude: crime.geometry.coordinates[1]
                             });
                         });
                         redis.set(redis_key, JSON.stringify(out), function(err, status) {
