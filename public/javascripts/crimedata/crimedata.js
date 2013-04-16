@@ -1,3 +1,4 @@
+// CrimeData.js - Main client-side application file.
 
 require.config({
     paths: {
@@ -37,11 +38,11 @@ require([
 
     var crimes = new CrimesCollection();
 
+    // A random day with some crimes. Make interactive later.
     crimes.url = '/api/v1/crimes/2012/04/01';
 
     crimes.fetch({
         success: function(response) {
-            $('.mainwidget').empty();
             response.each(function(crime) {
                 $('.mainwidget').append(_.template(crime_pre_template, crime.toJSON()));
             });
