@@ -45,12 +45,30 @@ require([
     // A random day with some crimes. Make interactive later.
     crimesCollection.url = '/api/v1/crimes/2012/04/01';
 
+    var crime_types = {
+        person: ['SIMPLE ASSAULT', 'ROBBERY', 'AGGRAVATED ASSAULT', 'MURDER'],
+        property: ['VANDALISM', 'VEHICLE THEFT', 'BURGLARY', 'THEFT', 'DISTURBING THE PEACE'],
+        substance: ['ALCOHOL', 'NARCOTICS']
+    };
+
 
     var dateDropDowns = new DateDropdowns();
     dateDropDowns.render();
 
     crimesCollection.fetch({
         success: function(crimes) {
+            console.log(crimes.toJSON());
+            _.each(crimes.toJSON(), function(crime, index, crimes) {
+                if (_.contains(crime_types.person, crimes[index].properties.crime_type)) {
+                    crime.properties['marker-color'] = '#CC333F';
+                } else if (_.contains(crime_types.property, crimes[index].properties.crime_type)) {
+                    crime.properties['marker-color'] = '#EDC951';
+                } else if (_.contains(crime_types.substance, crimes[index].properties.crime_type)) {
+                    crime.properties['marker-color'] = '#00A0B0';
+                }
+                crime.properties.time = moment(crime.properties.date_time).format("dddd, MMMM Do YYYY, h:mm:ss a");
+            });
+
             var crimeMap = new CrimeMap({model: crimes});
             crimeMap.render();
         }

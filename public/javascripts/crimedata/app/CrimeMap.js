@@ -3,8 +3,9 @@
 define([
     'jquery',
     'underscore',
+    'text!templates/map_tooltip.html',
     'backbone'
-], function($, _) {
+], function($, _, map_tooltip_template) {
     // Unfortunately mapbox and requirejs don't play nicely.
     // So we have to have a bit of faith that it's loaded already and
     // can't have a hard dependency on it. Some more info
@@ -19,9 +20,19 @@ define([
 
             // Create and add marker layer
             var markerLayer = mapbox.markers.layer().features(this.model.toJSON());
+            var interaction = mapbox.markers.interaction(markerLayer);
+
+            // Set a custom formatter for tooltips
+            // Provide a function that returns html to be used in tooltip
+            interaction.formatter(function(feature) {
+                var hover = _.template(map_tooltip_template);
+                return hover(feature);
+            });
 
             map.addLayer(markerLayer)
                 .setExtent(markerLayer.extent());
+
+            map.ui.zoomer.add();
         }
     });
 
