@@ -1,17 +1,28 @@
 
 require.config({
     paths: {
+        // Libraries
         'jquery': 'lib/jquery-1.9.1.min',
         'backbone': 'lib/backbone-min',
         'underscore': 'lib/underscore-min',
         'd3': 'lib/d3.v3.min',
         'spin': 'lib/spin.min',
-        'text': 'lib/text'
+        'text': 'lib/text',
+
+        // Custom modules
+        'CrimeMap': 'app/CrimeMap'
     }
 });
 
-require(['jquery', 'underscore', 'd3', 'spin', 'text!templates/crime-pre.html', 'backbone'],
-function($, _, d3, Spinner, crime_pre_template) {
+require([
+    'jquery',
+    'underscore',
+    'd3',
+    'spin',
+    'CrimeMap',
+    'text!templates/crime-pre.html',
+    'backbone'
+], function($, _, d3, Spinner, CrimeMap, crime_pre_template) {
 
     $('.mainwidget').append("<div id='waiting-spinner'></div>");
 
