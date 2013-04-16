@@ -6,13 +6,18 @@ require.config({
         'jquery': 'lib/jquery-1.9.1.min',
         'backbone': 'lib/backbone-min',
         'underscore': 'lib/underscore-min',
+        'bootstrap-dropdown': 'lib/bootstrap-dropdown',
         'd3': 'lib/d3.v3.min',
         'moment': 'lib/moment.min',
         'spin': 'lib/spin.min',
         'text': 'lib/text',
 
         // Custom modules
-        'CrimeMap': 'app/CrimeMap'
+        'CrimeMap': 'app/CrimeMap',
+        'DateDropdowns': 'app/DateDropdowns'
+    },
+    shim: {
+        'bootstrap-dropdown': 'jquery'
     }
 });
 
@@ -23,9 +28,10 @@ require([
     'moment',
     'spin',
     'CrimeMap',
+    'DateDropdowns',
     'text!templates/crime-pre.html',
     'backbone'
-], function($, _, d3, moment, Spinner, CrimeMap, crime_pre_template) {
+], function($, _, d3, moment, Spinner, CrimeMap, DateDropdowns, crime_pre_template) {
 
     var Crime = Backbone.Model.extend({});
 
@@ -35,10 +41,13 @@ require([
 
     var crimesCollection = new CrimesCollection();
 
+
     // A random day with some crimes. Make interactive later.
     crimesCollection.url = '/api/v1/crimes/2012/04/01';
 
-    $('#crime-date').html(moment('2012/04/01').format('MMM D, YYYY'));
+
+    var dateDropDowns = new DateDropdowns();
+    dateDropDowns.render();
 
     crimesCollection.fetch({
         success: function(crimes) {

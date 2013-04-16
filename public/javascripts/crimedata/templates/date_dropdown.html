@@ -1,0 +1,32 @@
+<div class='btn-group'>
+  <a class='btn dropdown-toggle' data-toggle='dropdown'><span id='crime-year'>2012</span> <span class='caret'></span></a>
+  <ul class='dropdown-menu'>
+    <% _.each(years, function(year) { %>
+    <li>
+      <a href="#" data-val='<%= year %>' class='year-dropdown dropdown'><%= year %></a>
+    </li>
+    <% }); %>
+  </ul>
+</div>
+
+<div class='btn-group'>
+  <a class='btn dropdown-toggle' data-toggle='dropdown'><span id='crime-year'>Apr</span> <span class='caret'></span></a>
+  <ul class='dropdown-menu'>
+    <% _.each(months, function(month) { %>
+    <li>
+      <a href="#" data-val='<%= month %>' class='month-dropdown dropdown'><%= month %></a>
+    </li>
+    <% }); %>
+  </ul>
+</div>
+
+<div class='btn-group'>
+  <a class='btn dropdown-toggle' data-toggle='dropdown'><span id='crime-year'>01</span> <span class='caret'></span></a>
+  <ul class='dropdown-menu'>
+    <% _.each(days, function(day) { %>
+    <li>
+      <a href="#" data-val='<%= day %>' class='day-dropdown dropdown'><%= day %></a>
+    </li>
+    <% }); %>
+  </ul>
+</div>
