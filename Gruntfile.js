@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     docco: {
       debug: {
-        src: ['app.js', 'routes/*.js', 'models/*.js', 'api/*.js', 'assets/js/*.js'],
+        src: ['app.js', 'routes/*.js', 'models/*.js', 'api/*.js', 'public/javascripts/crimedata/*.js', 'public/javascripts/crimedata/app/*.js'],
         options: {
           output: 'docs/'
         }
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         }
       },
       uses_defaults: ['*.js'],
-      all: ['Gruntfile.js', 'app.js', 'models/*.js', 'api/*.js', 'routes/*.js', 'assets/js/*.js']
+      all: ['Gruntfile.js', 'app.js', 'models/*.js', 'api/*.js', 'routes/*.js', 'public/javascripts/crimedata/*.js', 'public/javascripts/crimedata/app/*.js']
     },
     pkg: grunt.file.readJSON('package.json'),
     simplemocha: {
@@ -53,7 +53,7 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['*.js', 'routes/*.js', 'test/*.js', 'models/*.js', 'api/*.js', 'assets/js/*.js'],
+      files: ['*.js', 'routes/*.js', 'test/*.js', 'models/*.js', 'api/*.js', 'public/javascripts/crimedata/*.js', 'public/javascripts/crimedata/app/*.js'],
       tasks: ['simplemocha', 'jshint', 'docco']
     }
   });
