@@ -57,6 +57,7 @@ require([
 
     crimesCollection.fetch({
         success: function(crimes) {
+            $('#num-crimes').html(crimes.length);
             console.log(crimes.toJSON());
             _.each(crimes.toJSON(), function(crime, index, crimes) {
                 if (_.contains(crime_types.person, crimes[index].properties.crime_type)) {
