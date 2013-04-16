@@ -1,12 +1,13 @@
 extends layout
 
 block content
-  .container
+  .container-fluid
     .content
       .page-header
-      .row
-        .span10
-          #map-widget
+      .row-fluid
+        .span8
+          .widget.container.large
+            #widget-map
         .span4
            .sidewidget
   .footer
