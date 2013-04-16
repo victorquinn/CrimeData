@@ -2,11 +2,11 @@
 
 }
 
-.sidewidget {
-
+.sidebar {
 }
 
 .widget {
+    margin: 16px;
     padding: 5px;
     background-color: #f5f5f5;
     border: 1px solid #e3e3e3;
@@ -18,9 +18,46 @@
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 
-.container.large {
+.large {
     width: 100%;
     height: 750px;
+}
+
+/* Large desktop */
+@media (min-width: 1200px) {
+    .large {
+        width: 100%;
+        height: 1050px;
+    }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+    .large {
+        width: 100%;
+        height: 650px;
+    }
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+    .large {
+        width: 100%;
+        height: 450px;
+    }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+    .large {
+        width: 450px;
+        height: 450px;
+    }
+}
+
+.small {
+    width: 100%;
+    height: 231px;
 }
 
 #widget-map {
