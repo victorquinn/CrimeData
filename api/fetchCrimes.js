@@ -55,25 +55,10 @@ module.exports = function(year, month, day, next) {
                 request("http://sanfrancisco.crimespotting.org/crime-data?&count=10000&dtstart=" + start.format("YYYY-MM-DDThh:mm:ss[Z]") + "&dtend=" + end.format("YYYY-MM-DDThh:mm:ss[Z]") + "&format=json", function(error, response, body) {
                     if (!error && response.statusCode === 200) {
                         var data = JSON.parse(body);
-                        // Drop elements we don't care about to reduce size of dataset.
-                        // These are null or otherwise not useful
-                        // from the SF Crimespotting dataset. We could get a bit more elegant and dynamically exclude
-                        // items whose values are null, but this is good enough for now.
-                        var out = [];
-                        _.each(data.features, function(crime) {
-                            out.push({
-                                id: crime.id,
-                                type: crime.properties.crime_type,
-                                description: crime.properties.description,
-                                case_number: crime.properties.case_number,
-                                date_time: moment(crime.properties.date_time).utc(),
-                                latitude: crime.geometry.coordinates[0],
-                                longitude: crime.geometry.coordinates[1]
-                            });
-                        });
-                        redis.set(redis_key, JSON.stringify(out), function(err, status) {
+
+                        redis.set(redis_key, JSON.stringify(data.features), function(err, status) {
                             // Send the output back to the requester for handling
-                            next(out);
+                            next(data.features);
                         });
                     } else {
                         return error.message;
