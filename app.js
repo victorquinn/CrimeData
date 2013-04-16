@@ -4,18 +4,10 @@
 //
 
 var express = require('express'),
-    mongoose = require('mongoose'),
     config = require('./config'),
     routes = require('./routes'),
     http = require('http'),
-    path = require('path'),
-    models = require('./models');
-
-//
-// Data setup
-//
-
-mongoose.connect(config.mongoUri);
+    path = require('path');
 
 var app = module.exports = express();
 
