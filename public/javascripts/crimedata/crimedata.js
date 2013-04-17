@@ -22,7 +22,10 @@ require.config({
     },
     shim: {
         'bootstrap-dropdown': 'jquery',
-        'bootstrap-datepicker': 'jquery'
+        'bootstrap-datepicker': 'jquery',
+        d3: {
+            exports: 'd3'
+        }
     }
 });
 
@@ -74,7 +77,7 @@ require([
                 var crimeMap = new CrimeMap({collection: crimes});
                 crimeMap.render();
 
-                var crimesHourly = new CrimesHourly({model: crimes});
+                var crimesHourly = new CrimesHourly({collection: crimes});
                 crimesHourly.render();
             }
         });
