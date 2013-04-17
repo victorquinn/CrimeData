@@ -6,14 +6,13 @@
 <span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">moment</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">CrimeDateView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+        <span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#crime-date&#39;</span><span class="p">,</span>
         <span class="nx">getDate</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#crime-date&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">val</span><span class="p">();</span>
         <span class="p">},</span>
         <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-
             <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">().</span><span class="nx">subtract</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">);</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#crime-date&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
-
+            <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
             <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">});</span>

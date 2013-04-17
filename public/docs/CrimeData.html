@@ -15,7 +15,10 @@
     <span class="p">},</span>
     <span class="nx">shim</span><span class="o">:</span> <span class="p">{</span>
         <span class="s1">&#39;bootstrap-dropdown&#39;</span><span class="o">:</span> <span class="s1">&#39;jquery&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;bootstrap-datepicker&#39;</span><span class="o">:</span> <span class="s1">&#39;jquery&#39;</span>
+        <span class="s1">&#39;bootstrap-datepicker&#39;</span><span class="o">:</span> <span class="s1">&#39;jquery&#39;</span><span class="p">,</span>
+        <span class="nx">d3</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">exports</span><span class="o">:</span> <span class="s1">&#39;d3&#39;</span> 
+        <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">});</span>
 
@@ -67,7 +70,7 @@
                 <span class="kd">var</span> <span class="nx">crimeMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CrimeMap</span><span class="p">({</span><span class="nx">collection</span><span class="o">:</span> <span class="nx">crimes</span><span class="p">});</span>
                 <span class="nx">crimeMap</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span>
 
-                <span class="kd">var</span> <span class="nx">crimesHourly</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CrimesHourly</span><span class="p">({</span><span class="nx">model</span><span class="o">:</span> <span class="nx">crimes</span><span class="p">});</span>
+                <span class="kd">var</span> <span class="nx">crimesHourly</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CrimesHourly</span><span class="p">({</span><span class="nx">collection</span><span class="o">:</span> <span class="nx">crimes</span><span class="p">});</span>
                 <span class="nx">crimesHourly</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span>
             <span class="p">}</span>
         <span class="p">});</span>

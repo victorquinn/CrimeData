@@ -5,7 +5,7 @@ module.exports = function(grunt) {
       debug: {
         src: ['app.js', 'routes/*.js', 'models/*.js', 'api/*.js', 'public/javascripts/crimedata/*.js', 'public/javascripts/crimedata/app/*.js'],
         options: {
-          output: 'docs/'
+          output: 'public/docs/'
         }
       }
     },
