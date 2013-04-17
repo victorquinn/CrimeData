@@ -1,0 +1,48 @@
+<!DOCTYPE html>  <html> <head>   <title>CrimeWheel.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="fetchCrimes.html">                 fetchCrimes.js               </a>                                           <a class="source" href="index.html">                 index.js               </a>                                           <a class="source" href="app.html">                 app.js               </a>                                           <a class="source" href="crime.html">                 crime.js               </a>                                           <a class="source" href="index.html">                 index.js               </a>                                           <a class="source" href="CrimeData.html">                 CrimeData.js               </a>                                           <a class="source" href="CrimeDate.html">                 CrimeDate.js               </a>                                           <a class="source" href="CrimeList.html">                 CrimeList.js               </a>                                           <a class="source" href="CrimeMap.html">                 CrimeMap.js               </a>                                           <a class="source" href="CrimeWheel.html">                 CrimeWheel.js               </a>                                           <a class="source" href="CrimesHourly.html">                 CrimesHourly.js               </a>                                           <a class="source" href="DateDropdowns.html">                 DateDropdowns.js               </a>                                           <a class="source" href="api.html">                 api.js               </a>                                           <a class="source" href="home.html">                 home.js               </a>                                           <a class="source" href="index.html">                 index.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               CrimeWheel.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>CrimesWheel.js - Wheel visualization of crimes</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span><span class="p">([</span>
+    <span class="s1">&#39;jquery&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;underscore&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;d3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;backbone&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;circularheatchart&#39;</span>
+<span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">d3</span><span class="p">,</span> <span class="nx">Backbone</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">CrimesWheelView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+        <span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#crime-wheel&#39;</span><span class="p">,</span>
+        <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+            <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">empty</span><span class="p">();</span>
+
+            <span class="kd">var</span> <span class="nx">hours</span> <span class="o">=</span> <span class="p">[];</span>
+            <span class="nx">_</span><span class="p">(</span><span class="mi">24</span><span class="p">).</span><span class="nx">times</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span> <span class="nx">hours</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="nx">hour</span><span class="o">:</span> <span class="nx">n</span><span class="p">,</span> <span class="nx">frequency</span><span class="o">:</span> <span class="mi">0</span><span class="p">};</span> <span class="p">});</span>
+
+            <span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">crime</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">hours</span><span class="p">[</span><span class="nx">moment</span><span class="p">(</span><span class="nx">crime</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;properties&#39;</span><span class="p">).</span><span class="nx">date_time</span><span class="p">).</span><span class="nx">hour</span><span class="p">()].</span><span class="nx">frequency</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>TODO: Fix this so it works!</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="cm">/*</span>
+<span class="cm">            var chart = circularHeatChart()</span>
+<span class="cm">                .segmentHeight(5)</span>
+<span class="cm">                .innerRadius(20)</span>
+<span class="cm">                .numSegments(12)</span>
+<span class="cm">                .domain([50, 200])</span>
+<span class="cm">                .range([&#39;white&#39;, &#39;red&#39;])</span>
+<span class="cm">                .segmentLabels(_.range(24))</span>
+<span class="cm">                .radialLabels(years);</span>
+
+<span class="cm">            d3.select(&#39;#chart&#39;)</span>
+<span class="cm">                .selectAll(&#39;svg&#39;)</span>
+<span class="cm">                .data([hours])</span>
+<span class="cm">                .enter()</span>
+<span class="cm">                .append(&#39;svg&#39;)</span>
+<span class="cm">                .call(chart);</span>
+<span class="cm">            */</span>
+
+            <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;&lt;img src=&#39;images/wheel.png&#39; /&gt;&quot;</span><span class="p">);</span>
+
+            <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+
+    <span class="k">return</span> <span class="nx">CrimesWheelView</span><span class="p">;</span>
+<span class="p">});</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
