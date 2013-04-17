@@ -19,7 +19,7 @@ define([
             map.addLayer(mapbox.layer().id('victorquinn.map-1jo85ie8'));
 
             // Create and add marker layer
-            var markerLayer = mapbox.markers.layer().features(this.model.toJSON());
+            var markerLayer = mapbox.markers.layer().features(this.collection.toJSON());
             var interaction = mapbox.markers.interaction(markerLayer);
 
             // Set a custom formatter for tooltips

@@ -7,17 +7,22 @@ require.config({
         'backbone': 'lib/backbone-min',
         'underscore': 'lib/underscore-min',
         'bootstrap-dropdown': 'lib/bootstrap-dropdown',
+        'bootstrap-datepicker': 'lib/bootstrap-datepicker',
         'd3': 'lib/d3.v3.min',
+        'domready': 'lib/domReady',
         'moment': 'lib/moment.min',
         'spin': 'lib/spin.min',
         'text': 'lib/text',
 
         // Custom modules
         'CrimeMap': 'app/CrimeMap',
+        'CrimeDate': 'app/CrimeDate',
+        'CrimesHourly': 'app/CrimesHourly',
         'DateDropdowns': 'app/DateDropdowns'
     },
     shim: {
-        'bootstrap-dropdown': 'jquery'
+        'bootstrap-dropdown': 'jquery',
+        'bootstrap-datepicker': 'jquery'
     }
 });
 
@@ -28,10 +33,12 @@ require([
     'moment',
     'spin',
     'CrimeMap',
-    'DateDropdowns',
+    'CrimesHourly',
+    'CrimeDate',
     'text!templates/crime-pre.html',
+    'domready',
     'backbone'
-], function($, _, d3, moment, Spinner, CrimeMap, DateDropdowns, crime_pre_template) {
+], function($, _, d3, moment, Spinner, CrimeMap, CrimesHourly, CrimeDate, crime_pre_template, domReady) {
 
     var Crime = Backbone.Model.extend({});
 
@@ -41,37 +48,57 @@ require([
 
     var crimesCollection = new CrimesCollection();
 
-
-    // A random day with some crimes. Make interactive later.
-    crimesCollection.url = '/api/v1/crimes/2012/04/01';
-
     var crime_types = {
-        person: ['SIMPLE ASSAULT', 'ROBBERY', 'AGGRAVATED ASSAULT', 'MURDER'],
-        property: ['VANDALISM', 'VEHICLE THEFT', 'BURGLARY', 'THEFT', 'DISTURBING THE PEACE'],
+        person: ['SIMPLE ASSAULT', 'ROBBERY', 'AGGRAVATED ASSAULT', 'MURDER', 'PROSTITUTION'],
+        property: ['VANDALISM', 'VEHICLE THEFT', 'BURGLARY', 'THEFT', 'DISTURBING THE PEACE', 'ARSON'],
         substance: ['ALCOHOL', 'NARCOTICS']
     };
 
+    var fetchCrimes = function(date) {
+        crimesCollection.url = '/api/v1/crimes/' + date;
+        crimesCollection.fetch({
+            success: function(crimes) {
+                $('#num-crimes').html(crimes.length);
 
-    var dateDropDowns = new DateDropdowns();
-    dateDropDowns.render();
+                _.each(crimes.toJSON(), function(crime, index, crimes) {
+                    if (_.contains(crime_types.person, crimes[index].properties.crime_type)) {
+                        crime.properties['marker-color'] = '#CC333F';
+                    } else if (_.contains(crime_types.property, crimes[index].properties.crime_type)) {
+                        crime.properties['marker-color'] = '#EDC951';
+                    } else if (_.contains(crime_types.substance, crimes[index].properties.crime_type)) {
+                        crime.properties['marker-color'] = '#00A0B0';
+                    }
+                    crime.properties.time = moment(crime.properties.date_time).format("dddd, MMMM Do YYYY, h:mm:ss a");
+                });
 
-    crimesCollection.fetch({
-        success: function(crimes) {
-            $('#num-crimes').html(crimes.length);
-            console.log(crimes.toJSON());
-            _.each(crimes.toJSON(), function(crime, index, crimes) {
-                if (_.contains(crime_types.person, crimes[index].properties.crime_type)) {
-                    crime.properties['marker-color'] = '#CC333F';
-                } else if (_.contains(crime_types.property, crimes[index].properties.crime_type)) {
-                    crime.properties['marker-color'] = '#EDC951';
-                } else if (_.contains(crime_types.substance, crimes[index].properties.crime_type)) {
-                    crime.properties['marker-color'] = '#00A0B0';
-                }
-                crime.properties.time = moment(crime.properties.date_time).format("dddd, MMMM Do YYYY, h:mm:ss a");
-            });
+                var crimeMap = new CrimeMap({collection: crimes});
+                crimeMap.render();
 
-            var crimeMap = new CrimeMap({model: crimes});
-            crimeMap.render();
-        }
+                var crimesHourly = new CrimesHourly({model: crimes});
+                crimesHourly.render();
+            }
+        });
+    };
+
+    domReady(function() {
+        $("#trends-btn").bind('click', function() {
+            alert("Apologies, this feature is not yet implemented.");
+        });
+
+        // Default to 1 year ago just because it has crimes. Ideally we'd default
+        // to today, but the live database hasn't been updated in a bit.
+
+        var crimeDate = new CrimeDate();
+        crimeDate.render();
+        fetchCrimes(crimeDate.getDate());
+
+        // TODO: Refactor this as a Backbone event
+        $("#crime-date").bind('keyup', function() {
+            fetchCrimes(crimeDate.getDate());
+        });
     });
+
+    // Bind this globally in case we want to manipulate for the demo.
+    // Should undo this if going into production
+    window.fetchCrimes = fetchCrimes;
 });
