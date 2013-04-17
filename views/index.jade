@@ -9,14 +9,23 @@ block content
             button.btn.active#live-btn Daily
             button.btn#trends-btn Trends
         .row
-          #date-dropdowns
-          form
+          form.filters
             label(for='crime-date') Date
             input(name='crime-date', id='crime-date')
       .row
         .span12
           .blockquote
-            .p Showing <var id='num-crimes'></var> crimes
+            .p <strong><var id='num-crimes'></var> total crimes</strong> (<var id='num-person'></var> crimes against the person, <var id='num-property'></var> crimes against property, and <var id='num-substance'></var> substance abuse crimes)
+           p Filter by crime type:
+            .btn-group.filter-btns
+              button.btn.active.filter-btn All
+              button.btn.filter-btn Simple Assault
+              button.btn.filter-btn Robbery
+              button.btn.filter-btn Murder
+              button.btn.filter-btn Vandalism
+              button.btn.filter-btn Burglary
+              button.btn.filter-btn Theft
+              button.btn.filter-btn Narcotics
         .span8
           .widget.large
             #widget-map
@@ -24,7 +33,7 @@ block content
           .widget.container-fluid.small
             #crimes-hourly
           .widget.container-fluid.small
-            img(src='images/wheel.png')
+            #crime-wheel
           .widget.container-fluid.small
             #crime-list
   .footer

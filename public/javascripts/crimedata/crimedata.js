@@ -67,18 +67,25 @@ require([
         crimesCollection.url = '/api/v1/crimes/' + date;
         crimesCollection.fetch({
             success: function(crimes) {
-                $('#num-crimes').html(crimes.length);
-
+                var typesum = {person: 0, property: 0, substance: 0};
                 _.each(crimes.toJSON(), function(crime, index, crimes) {
                     if (_.contains(crime_types.person, crimes[index].properties.crime_type)) {
                         crime.properties['marker-color'] = '#CC333F';
+                        typesum.person++;
                     } else if (_.contains(crime_types.property, crimes[index].properties.crime_type)) {
                         crime.properties['marker-color'] = '#EDC951';
+                        typesum.property++;
                     } else if (_.contains(crime_types.substance, crimes[index].properties.crime_type)) {
                         crime.properties['marker-color'] = '#00A0B0';
+                        typesum.substance++;
                     }
                     crime.properties.time = moment(crime.properties.date_time).format("dddd, MMMM Do YYYY, h:mm:ss a");
                 });
+
+                $('#num-person').html(typesum.person);
+                $('#num-property').html(typesum.property);
+                $('#num-substance').html(typesum.substance);
+                $('#num-crimes').html(crimes.length);
 
                 var crimeMap = new CrimeMap({collection: crimes});
                 crimeMap.render();
@@ -111,7 +118,7 @@ require([
         crimeDate.render();
         fetchCrimes(crimeDate.getDate());
 
-        // TODO: Refactor this as a Backbone event
+        // TODO: Refactor these as Backbone events
         $("#crime-date").bind('keyup', function() {
             fetchCrimes(crimeDate.getDate());
         });
