@@ -24,14 +24,17 @@ define([
 
             // Set a custom formatter for tooltips
             // Provide a function that returns html to be used in tooltip
+            // We're using an underscore template for the tooltip body
             interaction.formatter(function(feature) {
                 var hover = _.template(map_tooltip_template);
                 return hover(feature);
             });
 
+            // Zoom the map in automatically based on the data
             map.addLayer(markerLayer)
                 .setExtent(markerLayer.extent());
 
+            // Add the zoom controls so the user can zoom in and out
             map.ui.zoomer.add();
         }
     });

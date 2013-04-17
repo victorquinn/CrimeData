@@ -13,6 +13,9 @@ define([
             return this.$el.val();
         },
         render: function() {
+            // Default to 1 year ago just because it has crimes. Ideally we'd default
+            // to today, but the live database hasn't been updated in a bit.
+
             var date = moment().subtract('year', 1).format('YYYY/MM/DD');
             this.$el.val(date);
             return this;

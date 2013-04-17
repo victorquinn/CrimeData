@@ -49,19 +49,32 @@ require([
     'backbone'
 ], function($, _, d3, moment, Spinner, CrimeMap, CrimeWheel, CrimeList, CrimesHourly, CrimeDate, crime_pre_template, domReady) {
 
+    // Create a simple model and collection for the crimes themselves
     var Crime = Backbone.Model.extend({});
-
     var CrimesCollection = Backbone.Collection.extend({
         model: Crime
     });
 
+    // Instantiate said Collection
     var crimesCollection = new CrimesCollection();
+
+    // We are assigning these color codes client-side. Went back and forth on this.
+    // On one hand, it's a data issue so probably shoud be done server-side, but on the
+    // other there'd be a lot of redundancy so that would result in more data being sent
+    // over the wire, a lot of it duplicated. So I'm leaving this client-side for now.
+
+    // We should run performance metrics and see what the outcome is of doing it on the
+    // other side.
 
     var crime_types = {
         person: ['SIMPLE ASSAULT', 'ROBBERY', 'AGGRAVATED ASSAULT', 'MURDER', 'PROSTITUTION'],
         property: ['VANDALISM', 'VEHICLE THEFT', 'BURGLARY', 'THEFT', 'DISTURBING THE PEACE', 'ARSON'],
         substance: ['ALCOHOL', 'NARCOTICS']
     };
+
+    // Helper function which, given a date, will fetch the crimes. TODO: This should all
+    // be encapsulated under the CrimesCollection, the CrimesCollection split out to its
+    // own module file, and this event handler dealt with there.
 
     var fetchCrimes = function(date) {
         crimesCollection.url = '/api/v1/crimes/' + date;
@@ -111,9 +124,6 @@ require([
             alert("Apologies, filters are not yet implemented.");
         });
 
-        // Default to 1 year ago just because it has crimes. Ideally we'd default
-        // to today, but the live database hasn't been updated in a bit.
-
         var crimeDate = new CrimeDate();
         crimeDate.render();
         fetchCrimes(crimeDate.getDate());
@@ -123,8 +133,4 @@ require([
             fetchCrimes(crimeDate.getDate());
         });
     });
-
-    // Bind this globally in case we want to manipulate for the demo.
-    // Should undo this if going into production
-    window.fetchCrimes = fetchCrimes;
 });
