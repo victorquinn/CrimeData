@@ -8,14 +8,13 @@ define([
 ], function($, _, moment) {
 
     var CrimeDateView = Backbone.View.extend({
+        el: '#crime-date',
         getDate: function() {
-            return $('#crime-date').val();
+            return this.$el.val();
         },
         render: function() {
-
             var date = moment().subtract('year', 1).format('YYYY/MM/DD');
-            $('#crime-date').val(date);
-
+            this.$el.val(date);
             return this;
         }
     });

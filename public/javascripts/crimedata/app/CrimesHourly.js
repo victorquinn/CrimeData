@@ -8,8 +8,7 @@ define([
 ], function($, _, d3) {
 
     var CrimesHourlyView = Backbone.View.extend({
-        tagName: 'div',
-        id: 'crimes-hourly',
+        el: '#crimes-hourly',
         render: function() {
             // TODO: Make this dynamic based on container size.
             var width = 300,
