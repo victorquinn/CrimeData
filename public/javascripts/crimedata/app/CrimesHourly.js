@@ -12,6 +12,8 @@ define([
         render: function() {
             var view = this;
 
+            this.$el.empty();
+
             // TODO: Make this dynamic based on container size.
             var margin = {top: 10, right: 10, bottom: 20, left: 20},
                 width = 300,
