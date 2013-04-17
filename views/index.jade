@@ -10,15 +10,20 @@ block content
             button.btn#trends-btn Trends
         .row
           #date-dropdowns
+          form
+            label(for='crime-date') Date
+            input(name='crime-date', id='crime-date')
       .row
         .span12
           .blockquote
             .p Showing <var id='num-crimes'></var> crimes
         .span8
-          .widget.container-fluid.large
+          .widget.container.large
             #widget-map
         .span4.sidebar
           .widget.container-fluid.small
+            #crimes-hourly
           .widget.container-fluid.small
+            img(src='images/wheel.png')
           .widget.container-fluid.small
   .footer
