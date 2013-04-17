@@ -10,7 +10,7 @@ define([
     var CrimeDateView = Backbone.View.extend({
         el: '#crime-date',
         getDate: function() {
-            return this.$el.val();
+            return moment(this.$el.val()).format('YYYY/MM/DD');
         },
         render: function() {
             // Default to 1 year ago just because it has crimes. Ideally we'd default

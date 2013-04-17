@@ -13,7 +13,6 @@ define([
         el: '#crime-list',
         template: _.template(crimepre_template),
         render: function() {
-            console.log({crimes: this.collection.toJSON()});
             this.$el.html(this.template({crimes: this.collection.toJSON()}));
         }
     });

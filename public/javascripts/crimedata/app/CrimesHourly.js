@@ -47,7 +47,7 @@ define([
             });
 
             x.domain(hours.map(function(d) { return d.hour; }));
-            y.domain([0, d3.max(hours, function(h) { console.log(h); return h.frequency; })]);
+            y.domain([0, d3.max(hours, function(h) { return h.frequency; })]);
 
             svg.append("g")
                 .attr("class", "x axis")

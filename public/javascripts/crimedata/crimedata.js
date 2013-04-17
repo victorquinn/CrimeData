@@ -58,6 +58,9 @@ require([
     // Instantiate said Collection
     var crimesCollection = new CrimesCollection();
 
+    var crimeDate = new CrimeDate();
+    crimeDate.render();
+
     // We are assigning these color codes client-side. Went back and forth on this.
     // On one hand, it's a data issue so probably shoud be done server-side, but on the
     // other there'd be a lot of redundancy so that would result in more data being sent
@@ -99,6 +102,7 @@ require([
                 $('#num-property').html(typesum.property);
                 $('#num-substance').html(typesum.substance);
                 $('#num-crimes').html(crimes.length);
+                $('#date-of-crimes').html(crimeDate.getDate());
 
                 var crimeMap = new CrimeMap({collection: crimes});
                 crimeMap.render();
@@ -124,8 +128,6 @@ require([
             alert("Apologies, filters are not yet implemented.");
         });
 
-        var crimeDate = new CrimeDate();
-        crimeDate.render();
         fetchCrimes(crimeDate.getDate());
 
         // TODO: Refactor these as Backbone events
