@@ -1,5 +1,8 @@
-<pre>
-  Crime Id: <%= id %>
-  Description: <%= description %>
-  Type: <%= type %>
-</pre>
+
+<% _.each(crimes, function(crime) { %>
+  <pre>
+    Crime Id: <%= crime.id %>
+    Description: <%= crime.properties.description %>
+    Type: <%= crime.properties.crime_type %>
+  </pre>
+<% }); %>

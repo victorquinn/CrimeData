@@ -17,6 +17,7 @@ require.config({
         // Custom modules
         'CrimeMap': 'app/CrimeMap',
         'CrimeDate': 'app/CrimeDate',
+        'CrimeList': 'app/CrimeList',
         'CrimesHourly': 'app/CrimesHourly',
         'DateDropdowns': 'app/DateDropdowns'
     },
@@ -36,12 +37,13 @@ require([
     'moment',
     'spin',
     'CrimeMap',
+    'CrimeList',
     'CrimesHourly',
     'CrimeDate',
     'text!templates/crime-pre.html',
     'domready',
     'backbone'
-], function($, _, d3, moment, Spinner, CrimeMap, CrimesHourly, CrimeDate, crime_pre_template, domReady) {
+], function($, _, d3, moment, Spinner, CrimeMap, CrimeList, CrimesHourly, CrimeDate, crime_pre_template, domReady) {
 
     var Crime = Backbone.Model.extend({});
 
@@ -76,6 +78,9 @@ require([
 
                 var crimeMap = new CrimeMap({collection: crimes});
                 crimeMap.render();
+
+                var crimeList = new CrimeList({collection: crimes});
+                crimeList.render();
 
                 var crimesHourly = new CrimesHourly({collection: crimes});
                 crimesHourly.render();
